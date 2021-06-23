@@ -1,13 +1,11 @@
-package com.sumarizer.sumarizer;
+package com.summarizer.summarizer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SumarizerApplicationTests {
+class SummarizerApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
+  @Test
+  void contextLoads() {}
 }
