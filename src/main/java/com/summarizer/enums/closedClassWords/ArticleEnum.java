@@ -1,4 +1,4 @@
-package com.summarizer.enums;
+package com.summarizer.enums.closedClassWords;
 
 import java.util.EnumSet;
 
