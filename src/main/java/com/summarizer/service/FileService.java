@@ -1,6 +1,6 @@
 package com.summarizer.service;
 
-import com.summarizer.enums.SupportedFiles;
+import com.summarizer.enums.SupportedFilesEnum;
 import com.summarizer.exceptions.FileTypeNotSupported;
 import java.io.*;
 import java.text.BreakIterator;
@@ -14,23 +14,23 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileService {
 
   private static Locale textLocale = new Locale("pt", "BR");
-  private SupportedFiles supportedFiles;
+  private SupportedFilesEnum supportedFiles;
 
   public String[] convertFileIntoSentences(MultipartFile file)
       throws IOException, FileTypeNotSupported {
     var fileExtension = file.getContentType();
     var textFromFile = "";
 
-    if (!SupportedFiles.isSupported(fileExtension))
+    if (!SupportedFilesEnum.isSupported(fileExtension))
       throw new FileTypeNotSupported("O tipo de arquivo enviado não é suportado: " + fileExtension);
 
-    if (fileExtension.equals(SupportedFiles.PDF.getDescription()))
+    if (fileExtension.equals(SupportedFilesEnum.PDF.getDescription()))
       textFromFile = getTextFromPDF(file);
 
     return textSplitIntoSentences(textFromFile);
   }
 
-  public String[] textSplitIntoSentences(String text) {
+  private String[] textSplitIntoSentences(String text) {
     var iterator = BreakIterator.getSentenceInstance(textLocale);
     iterator.setText(text);
     var start = iterator.first();
@@ -45,6 +45,20 @@ public class FileService {
     return textIntoSentences.toArray(new String[textIntoSentences.size()]);
   }
 
+  public String[] textSplitIntoWords(String text) {
+    var iterator = BreakIterator.getWordInstance(textLocale);
+    iterator.setText(text);
+    var start = iterator.first();
+    var textIntoWords = new ArrayList<>();
+
+    for (int end = iterator.next(); end != BreakIterator.DONE; start = end, end = iterator.next()) {
+      var sentenceToAdd = text.substring(start, end).trim();
+      if (!sentenceToAdd.isEmpty() && !sentenceToAdd.isBlank()) textIntoWords.add(sentenceToAdd);
+    }
+
+    return textIntoWords.toArray(new String[textIntoWords.size()]);
+  }
+
   private String getTextFromPDF(MultipartFile multipartFile) throws IOException {
     var pdfDocument = new PDFTextStripper();
     var document = PDDocument.load(convertMultipartFileIntoFile(multipartFile));
@@ -57,6 +71,7 @@ public class FileService {
       for (String line : lines) pdfContent += line;
     }
 
+    document.close();
     return pdfContent.replaceAll("\n", " ");
   }
 

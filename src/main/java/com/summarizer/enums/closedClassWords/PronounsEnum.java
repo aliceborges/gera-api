@@ -1,6 +1,6 @@
 package com.summarizer.enums.closedClassWords;
 
-import java.util.EnumSet;
+import java.util.Arrays;
 
 public enum PronounsEnum {
   EU("eu"),
@@ -128,140 +128,19 @@ public enum PronounsEnum {
   CADA("cada"),
   ALGO("algo");
 
-  private String descriptrion;
-
-  public static EnumSet<PronounsEnum> pronounsPtBr =
-      EnumSet.of(
-          EU,
-          TU,
-          ELE,
-          ELA,
-          NOS_WITH_ACCENT,
-          VOS_WITH_ACCENT,
-          ELES,
-          ELAS,
-          MIM,
-          COMIGO,
-          TI,
-          CONTIGO,
-          CONSIGO,
-          CONVOSCO,
-          ME,
-          TE,
-          LHE,
-          LHES,
-          SE,
-          NOS,
-          VOS,
-          MEU,
-          MINHA,
-          MEUS,
-          MINHAS,
-          TEU,
-          TUA,
-          TEUS,
-          TUAS,
-          SEU,
-          SUA,
-          SEUS,
-          SUAS,
-          NOSSO,
-          NOSSA,
-          NOSSOS,
-          NOSSAS,
-          VOSSO,
-          VOSSA,
-          VOSSOS,
-          VOSSAS,
-          ESTE,
-          ESTES,
-          ESTA,
-          ESTAS,
-          ESSE,
-          ESSES,
-          ESSA,
-          ESSAS,
-          AQUELE,
-          AQUELA,
-          AQUELES,
-          AQUELAS,
-          ISTO,
-          ISSO,
-          AQUILO,
-          MESMO,
-          MESMA,
-          MESMOS,
-          MESMAS,
-          PROPRIO_WITH_ACCENT,
-          PROPRIOS_WITH_ACCENT,
-          PROPRIA_WITH_ACCENT,
-          PROPRIAS_WITH_ACCENT,
-          SEMELHANTE,
-          TAL,
-          QUE,
-          QUEM,
-          ONDE,
-          CUJO,
-          CUJA,
-          CUJOS,
-          CUJAS,
-          QUANDO,
-          COMO,
-          QUAL,
-          QUAIS,
-          ALGUM,
-          ALGUMA,
-          ALGUNS,
-          ALGUMAS,
-          ALGUEM_WITH_ACCENT,
-          NENHUM,
-          NENHUMA,
-          NENHUNS,
-          NENHUMAS,
-          NINGUEM,
-          TODO,
-          TODA,
-          TODOS,
-          TODAS,
-          TUDO,
-          OUTRO,
-          OUTRA,
-          OUTROS,
-          OUTRAS,
-          OUTREM,
-          MUITO,
-          MUITA,
-          MUITOS,
-          MUITAS,
-          POUCO,
-          POUCA,
-          POUCOS,
-          POUCAS,
-          CERTO,
-          CERTA,
-          CERTOS,
-          CERTAS,
-          VARIOS_WITH_ACCENT,
-          VARIAS_WITH_ACCENT,
-          TANTO,
-          TANTA,
-          TANTOS,
-          TANTAS,
-          QUANTO,
-          QUANTA,
-          QUANTOS,
-          QUANTAS,
-          QUALQUER,
-          QUAISQUER,
-          NADA,
-          CADA,
-          ALGO);
+  private String description;
 
   PronounsEnum(String descriptrion) {
-    this.descriptrion = descriptrion;
+    this.description = descriptrion;
   }
 
-  public String getDescriptrion() {
-    return this.descriptrion;
+  public String getDescription() {
+    return this.description;
+  }
+
+  public static boolean isPronouns(String word) {
+    return Arrays.stream(PronounsEnum.values())
+        .map(PronounsEnum::getDescription)
+        .anyMatch(pronouns -> pronouns.contains(word));
   }
 }

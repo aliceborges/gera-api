@@ -28,9 +28,9 @@ public class SwaggerConfigurations {
 
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
-        .title("Gerador de resumos de textos literários automático")
+        .title("Gerador de resumos de textos automático")
         .description(
-            "Gerador de resumos de textos literários automático feito para o projeto de final de curso da aluna Alice Borges dos Santos, do curso de Bacharelado em Sistemas"
+            "Gerador de resumos de textos automático em português brasileiro feito para o projeto de final de curso da aluna Alice Borges dos Santos, do curso de Bacharelado em Sistemas"
                 + "de Informação do Instituto Federal de Ciência e Tecnologia Catarinense")
         .version("1.0")
         .contact(

@@ -1,6 +1,6 @@
 package com.summarizer.enums.closedClassWords;
 
-import java.util.EnumSet;
+import java.util.Arrays;
 
 public enum ArticleEnum {
   O("o"),
@@ -14,13 +14,17 @@ public enum ArticleEnum {
 
   private String description;
 
-  public static EnumSet<ArticleEnum> articlesPtBr = EnumSet.of(O, A, OS, AS, UM, UMA, UNS, UMAS);
-
   ArticleEnum(String description) {
     this.description = description;
   }
 
   public String getDescription() {
     return this.description;
+  }
+
+  public static boolean isArticle(String word) {
+    return Arrays.stream(ArticleEnum.values())
+        .map(ArticleEnum::getDescription)
+        .anyMatch(article -> article.contains(word));
   }
 }

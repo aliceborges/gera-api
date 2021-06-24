@@ -3,14 +3,14 @@ package com.summarizer.enums;
 import java.util.Arrays;
 import java.util.EnumSet;
 
-public enum SupportedFiles {
+public enum SupportedFilesEnum {
   PDF("application/pdf");
 
   private String description;
 
   public static EnumSet supportedFilesList = EnumSet.of(PDF);
 
-  SupportedFiles(String description) {
+  SupportedFilesEnum(String description) {
     this.description = description;
   }
 
@@ -19,8 +19,8 @@ public enum SupportedFiles {
   }
 
   public static boolean isSupported(String fileExtension) {
-    return Arrays.stream(SupportedFiles.values())
-        .map(SupportedFiles::getDescription)
+    return Arrays.stream(SupportedFilesEnum.values())
+        .map(SupportedFilesEnum::getDescription)
         .anyMatch(extension -> extension.contains(fileExtension));
   }
 }

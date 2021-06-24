@@ -1,6 +1,6 @@
 package com.summarizer.enums.closedClassWords;
 
-import java.util.EnumSet;
+import java.util.Arrays;
 
 public enum ConjunctionEnum {
   QUE("que"),
@@ -34,42 +34,17 @@ public enum ConjunctionEnum {
 
   private String description;
 
-  public static EnumSet<ConjunctionEnum> conjunctionPtBr =
-      EnumSet.of(
-          QUE,
-          SE,
-          E,
-          NEM,
-          TAMPOUCO,
-          TANTO,
-          QUANTO,
-          MAS,
-          POREM_WITH_ACCENT,
-          CONTUDO,
-          TODAVIA,
-          ENTANTO,
-          ENTRETANTO,
-          OU,
-          ORA,
-          JA_WITH_ACCENT,
-          QUER,
-          SEJA,
-          LOGO,
-          POIS,
-          PORTANTO,
-          CONSEGUINTE,
-          ASSIM,
-          ENTAO_WITH_ACCENT,
-          DESCARTE,
-          DESSARTE,
-          PORQUANTO,
-          ENQUANTO);
-
   ConjunctionEnum(String description) {
     this.description = description;
   }
 
   public String getDescription() {
     return description;
+  }
+
+  public static boolean isConjunction(String word) {
+    return Arrays.stream(ConjunctionEnum.values())
+        .map(ConjunctionEnum::getDescription)
+        .anyMatch(conjunction -> conjunction.contains(word));
   }
 }

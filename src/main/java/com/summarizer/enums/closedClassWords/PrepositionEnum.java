@@ -1,6 +1,6 @@
 package com.summarizer.enums.closedClassWords;
 
-import java.util.EnumSet;
+import java.util.Arrays;
 
 public enum PrepositionEnum {
   ANTE("ante"),
@@ -23,31 +23,17 @@ public enum PrepositionEnum {
 
   private String description;
 
-  public static EnumSet<PrepositionEnum> prepositionPtBr =
-      EnumSet.of(
-          ANTE,
-          APOS_WITH_ACCENT,
-          ATE_WITH_ACCENT,
-          COM,
-          CONTRA,
-          DE,
-          DESDE,
-          EM,
-          ENTRE,
-          PARA,
-          PER,
-          PERANTE,
-          POR,
-          SEM,
-          SOB,
-          SOBRE,
-          TRAS_WITH_ACCENT);
-
   PrepositionEnum(String description) {
     this.description = description;
   }
 
   public String getDescription() {
     return description;
+  }
+
+  public static boolean isPreposition(String word) {
+    return Arrays.stream(PrepositionEnum.values())
+        .map(PrepositionEnum::getDescription)
+        .anyMatch(preposition -> preposition.contains(word));
   }
 }
