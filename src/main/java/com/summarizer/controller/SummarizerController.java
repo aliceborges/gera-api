@@ -7,12 +7,11 @@ import com.summarizer.exceptions.FileWithoutContent;
 import com.summarizer.service.SummarizerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Api(tags = "Envio do texto para geração do resumo")
 @RestController
@@ -25,11 +24,12 @@ public class SummarizerController {
           "O usuário envia um arquivo com o conteúdo do texto, e retorna uma string com o resumo gerado.",
       notes =
           "Você deve enviar um arquivo PDF para gerar o resumo. Caso envie em outros modelos, o arquivo não será aceito. Caso seja de um livro, por favor, envie para resumir um capítulo por vez. "
-  + "De preferência, o arquivo não deve conter o nome do autor, título ou links, somente o texto.")
+              + "De preferência, o arquivo não deve conter o nome do autor, título ou links, somente o texto.")
   @PostMapping(value = "/summary")
   @ResponseStatus(HttpStatus.OK)
-  public String generateSummary(@RequestPart MultipartFile file, @RequestParam SupportedLanguagesEnum language)
-          throws IOException, FileTypeNotSupported, FileWithoutContent, FileNotEnoughContent {
+  public String generateSummary(
+      @RequestPart MultipartFile file, @RequestParam SupportedLanguagesEnum language)
+      throws IOException, FileTypeNotSupported, FileWithoutContent, FileNotEnoughContent {
     return summarizerService.generateSummary(file, language);
   }
 }

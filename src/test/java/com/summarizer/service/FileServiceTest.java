@@ -4,12 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.summarizer.enums.SupportedLanguagesEnum;
 import com.summarizer.exceptions.FileTypeNotSupported;
+import com.summarizer.exceptions.FileWithoutContent;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-
-import com.summarizer.exceptions.FileWithoutContent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,7 +22,8 @@ public class FileServiceTest {
   private static SupportedLanguagesEnum LANGUAGE = SupportedLanguagesEnum.BRAZILIAN_PORTUGUESE;
 
   @Test(expected = FileTypeNotSupported.class)
-  public void should_return_file_not_supported() throws FileTypeNotSupported, IOException, FileWithoutContent {
+  public void should_return_file_not_supported()
+      throws FileTypeNotSupported, IOException, FileWithoutContent {
     var multipartFile =
         new MockMultipartFile(
             "data",
@@ -36,7 +35,8 @@ public class FileServiceTest {
   }
 
   @Test
-  public void should_return_sentences_of_file() throws FileTypeNotSupported, IOException, FileWithoutContent {
+  public void should_return_sentences_of_file()
+      throws FileTypeNotSupported, IOException, FileWithoutContent {
     var multipartFile =
         new MockMultipartFile(
             "teste.pdf",

@@ -3,11 +3,10 @@ package com.summarizer.service;
 import com.summarizer.enums.SupportedFilesEnum;
 import com.summarizer.enums.SupportedLanguagesEnum;
 import com.summarizer.exceptions.FileTypeNotSupported;
+import com.summarizer.exceptions.FileWithoutContent;
 import java.io.*;
 import java.text.BreakIterator;
 import java.util.*;
-
-import com.summarizer.exceptions.FileWithoutContent;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.stereotype.Service;
@@ -17,13 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileService {
 
   public String[] convertFileIntoSentences(MultipartFile file, SupportedLanguagesEnum language)
-          throws IOException, FileTypeNotSupported, FileWithoutContent {
+      throws IOException, FileTypeNotSupported, FileWithoutContent {
     var fileExtension = file.getContentType();
     var textFromFile = "";
 
     if (!SupportedFilesEnum.isSupported(fileExtension))
       throw new FileTypeNotSupported("O tipo de arquivo enviado não é suportado: " + fileExtension);
-    if(fileExtension == null || fileExtension.isEmpty() || fileExtension.isBlank())
+    if (fileExtension == null || fileExtension.isEmpty() || fileExtension.isBlank())
       throw new FileWithoutContent("O arquivo enviado não possui conteúdo.");
 
     if (fileExtension.equals(SupportedFilesEnum.PDF.getDescription()))

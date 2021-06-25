@@ -5,11 +5,10 @@ import com.summarizer.enums.closed_class_words.BrasilianPortugueseEnum;
 import com.summarizer.enums.closed_class_words.EnglishEnum;
 import com.summarizer.exceptions.FileNotEnoughContent;
 import com.summarizer.exceptions.FileTypeNotSupported;
+import com.summarizer.exceptions.FileWithoutContent;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import com.summarizer.exceptions.FileWithoutContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +20,8 @@ public class SummarizerService {
   private static final int THRESHOLD = 3;
   @Autowired private FileService fileService;
 
-  public String generateSummary(MultipartFile file, SupportedLanguagesEnum language) throws IOException, FileTypeNotSupported, FileWithoutContent, FileNotEnoughContent {
+  public String generateSummary(MultipartFile file, SupportedLanguagesEnum language)
+      throws IOException, FileTypeNotSupported, FileWithoutContent, FileNotEnoughContent {
     String[] sentences = fileService.convertFileIntoSentences(file, language);
     var timesWordRepeated = new HashMap<String, ArrayList<Integer>>();
     var linkMatrix = new int[sentences.length][sentences.length];
@@ -41,7 +41,8 @@ public class SummarizerService {
     getSetencesFromBondMatrix(bondMatrix, sentencesToMakeSummary);
 
     if (sentencesToMakeSummary.isEmpty())
-      throw new FileNotEnoughContent("O arquivo não tem a quantidade necessária de conteúdo para gerar um resumo.");
+      throw new FileNotEnoughContent(
+          "O arquivo não tem a quantidade necessária de conteúdo para gerar um resumo.");
 
     Collections.sort(sentencesToMakeSummary);
 
@@ -52,7 +53,8 @@ public class SummarizerService {
     return summary.toString();
   }
 
-  private void getSetencesFromBondMatrix(int[][] bondMatrix, ArrayList<Integer> sentencesToMakeSummary) {
+  private void getSetencesFromBondMatrix(
+      int[][] bondMatrix, ArrayList<Integer> sentencesToMakeSummary) {
     for (var currentSentence = 0; currentSentence <= bondMatrix.length - 1; currentSentence++) {
       for (var setenceToCompareWith = currentSentence + 1;
           setenceToCompareWith <= bondMatrix.length - 1;
@@ -105,13 +107,17 @@ public class SummarizerService {
   }
 
   private void makeListWithAllWordsAndQuantityOfSentences(
-      String[] sentences, HashMap<String, ArrayList<Integer>> timesWordRepeated, SupportedLanguagesEnum language) {
+      String[] sentences,
+      HashMap<String, ArrayList<Integer>> timesWordRepeated,
+      SupportedLanguagesEnum language) {
     for (String sentence : sentences) {
       sentence = stringService.formatSentence(sentence);
       var words = fileService.textSplitIntoWords(sentence, language);
       Arrays.stream(words)
           .filter(
-              word -> !timesWordRepeated.containsKey(word) && verifyIfWordIsNotClossedClass(language, word))
+              word ->
+                  !timesWordRepeated.containsKey(word)
+                      && verifyIfWordIsNotClossedClass(language, word))
           .forEach(
               word ->
                   timesWordRepeated.put(
