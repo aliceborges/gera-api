@@ -3,6 +3,7 @@ package com.summarizer.service;
 import com.summarizer.enums.SupportedLanguagesEnum;
 import com.summarizer.enums.closed_class_words.BrasilianPortugueseEnum;
 import com.summarizer.enums.closed_class_words.EnglishEnum;
+import com.summarizer.exceptions.FileNotEnoughContent;
 import com.summarizer.exceptions.FileTypeNotSupported;
 import java.io.IOException;
 import java.util.*;
@@ -20,7 +21,7 @@ public class SummarizerService {
   private static final int THRESHOLD = 3;
   @Autowired private FileService fileService;
 
-  public String generateSummary(MultipartFile file, SupportedLanguagesEnum language) throws IOException, FileTypeNotSupported, FileWithoutContent {
+  public String generateSummary(MultipartFile file, SupportedLanguagesEnum language) throws IOException, FileTypeNotSupported, FileWithoutContent, FileNotEnoughContent {
     String[] sentences = fileService.convertFileIntoSentences(file, language);
     var timesWordRepeated = new HashMap<String, ArrayList<Integer>>();
     var linkMatrix = new int[sentences.length][sentences.length];
@@ -33,10 +34,25 @@ public class SummarizerService {
     return formatSummary(bondMatrix, sentences);
   }
 
-  private String formatSummary(int[][] bondMatrix, String[] sentences) {
+  private String formatSummary(int[][] bondMatrix, String[] sentences) throws FileNotEnoughContent {
     var sentencesToMakeSummary = new ArrayList<Integer>();
     var summary = new StringBuilder();
 
+    getSetencesFromBondMatrix(bondMatrix, sentencesToMakeSummary);
+
+    if (sentencesToMakeSummary.isEmpty())
+      throw new FileNotEnoughContent("O arquivo não tem a quantidade necessária de conteúdo para gerar um resumo.");
+
+    Collections.sort(sentencesToMakeSummary);
+
+    for (int sentenceIndex : sentencesToMakeSummary) {
+      summary.append(sentences[sentenceIndex]).append(" ");
+    }
+
+    return summary.toString();
+  }
+
+  private void getSetencesFromBondMatrix(int[][] bondMatrix, ArrayList<Integer> sentencesToMakeSummary) {
     for (var currentSentence = 0; currentSentence <= bondMatrix.length - 1; currentSentence++) {
       for (var setenceToCompareWith = currentSentence + 1;
           setenceToCompareWith <= bondMatrix.length - 1;
@@ -49,14 +65,6 @@ public class SummarizerService {
         }
       }
     }
-
-    Collections.sort(sentencesToMakeSummary);
-
-    for (int sentenceIndex : sentencesToMakeSummary) {
-      summary.append(sentences[sentenceIndex] + " ");
-    }
-
-    return summary.toString();
   }
 
   private void makeLinkMatrix(
