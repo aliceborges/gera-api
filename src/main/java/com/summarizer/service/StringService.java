@@ -5,6 +5,6 @@ import java.util.Locale;
 public class StringService {
 
   public String formatSentence(String sentence) {
-    return sentence.replaceAll("[.,()!?@^:-]", " ").toLowerCase(Locale.ROOT);
+    return sentence.replaceAll("[^a-zà-úA-ZÀ-Ú0-9]", " ").toLowerCase(Locale.ROOT);
   }
 }

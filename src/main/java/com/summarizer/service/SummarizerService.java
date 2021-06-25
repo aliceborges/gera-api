@@ -1,13 +1,14 @@
 package com.summarizer.service;
 
-import com.summarizer.enums.closedClassWords.ArticleEnum;
-import com.summarizer.enums.closedClassWords.ConjunctionEnum;
-import com.summarizer.enums.closedClassWords.PrepositionEnum;
-import com.summarizer.enums.closedClassWords.PronounsEnum;
+import com.summarizer.enums.SupportedLanguagesEnum;
+import com.summarizer.enums.closed_class_words.BrasilianPortugueseEnum;
+import com.summarizer.enums.closed_class_words.EnglishEnum;
 import com.summarizer.exceptions.FileTypeNotSupported;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import com.summarizer.exceptions.FileWithoutContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,13 +20,13 @@ public class SummarizerService {
   private static final int THRESHOLD = 3;
   @Autowired private FileService fileService;
 
-  public String generateSummary(MultipartFile file) throws IOException, FileTypeNotSupported {
-    String[] sentences = fileService.convertFileIntoSentences(file);
+  public String generateSummary(MultipartFile file, SupportedLanguagesEnum language) throws IOException, FileTypeNotSupported, FileWithoutContent {
+    String[] sentences = fileService.convertFileIntoSentences(file, language);
     var timesWordRepeated = new HashMap<String, ArrayList<Integer>>();
     var linkMatrix = new int[sentences.length][sentences.length];
     var bondMatrix = new int[sentences.length][sentences.length];
 
-    makeListWithAllWordsAndQuantityOfSentences(sentences, timesWordRepeated);
+    makeListWithAllWordsAndQuantityOfSentences(sentences, timesWordRepeated, language);
     makeLinkMatrix(timesWordRepeated, linkMatrix);
     makeBondMatrix(linkMatrix, bondMatrix);
 
@@ -96,13 +97,13 @@ public class SummarizerService {
   }
 
   private void makeListWithAllWordsAndQuantityOfSentences(
-      String[] sentences, HashMap<String, ArrayList<Integer>> timesWordRepeated) {
+      String[] sentences, HashMap<String, ArrayList<Integer>> timesWordRepeated, SupportedLanguagesEnum language) {
     for (String sentence : sentences) {
       sentence = stringService.formatSentence(sentence);
-      var words = fileService.textSplitIntoWords(sentence);
+      var words = fileService.textSplitIntoWords(sentence, language);
       Arrays.stream(words)
           .filter(
-              word -> !timesWordRepeated.containsKey(word) && verifyIfWordIsNotClossedClass(word))
+              word -> !timesWordRepeated.containsKey(word) && verifyIfWordIsNotClossedClass(language, word))
           .forEach(
               word ->
                   timesWordRepeated.put(
@@ -133,10 +134,14 @@ public class SummarizerService {
     }
   }
 
-  private boolean verifyIfWordIsNotClossedClass(String word) {
-    return !ArticleEnum.isArticle(word)
-        && !ConjunctionEnum.isConjunction(word)
-        && !PrepositionEnum.isPreposition(word)
-        && !PronounsEnum.isPronouns(word);
+  private boolean verifyIfWordIsNotClossedClass(SupportedLanguagesEnum language, String word) {
+    var isClosedClassWord = false;
+
+    if (language.equals(SupportedLanguagesEnum.BRAZILIAN_PORTUGUESE))
+      isClosedClassWord = !BrasilianPortugueseEnum.isBrazilianPortugueseClosedClassWord(word);
+    if (language.equals(SupportedLanguagesEnum.ENGLISH))
+      isClosedClassWord = !EnglishEnum.isEnglishClosedClassWord(word);
+
+    return isClosedClassWord;
   }
 }

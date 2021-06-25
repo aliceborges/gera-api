@@ -1,10 +1,13 @@
 package com.summarizer.service;
 
 import com.summarizer.enums.SupportedFilesEnum;
+import com.summarizer.enums.SupportedLanguagesEnum;
 import com.summarizer.exceptions.FileTypeNotSupported;
 import java.io.*;
 import java.text.BreakIterator;
 import java.util.*;
+
+import com.summarizer.exceptions.FileWithoutContent;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.stereotype.Service;
@@ -13,40 +16,37 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileService {
 
-  private static Locale textLocale = new Locale("pt", "BR");
-  private SupportedFilesEnum supportedFiles;
-
-  public String[] convertFileIntoSentences(MultipartFile file)
-      throws IOException, FileTypeNotSupported {
+  public String[] convertFileIntoSentences(MultipartFile file, SupportedLanguagesEnum language)
+          throws IOException, FileTypeNotSupported, FileWithoutContent {
     var fileExtension = file.getContentType();
     var textFromFile = "";
 
     if (!SupportedFilesEnum.isSupported(fileExtension))
       throw new FileTypeNotSupported("O tipo de arquivo enviado não é suportado: " + fileExtension);
+    if(fileExtension == null || fileExtension.isEmpty() || fileExtension.isBlank())
+      throw new FileWithoutContent("O arquivo enviado não possui conteúdo.");
 
     if (fileExtension.equals(SupportedFilesEnum.PDF.getDescription()))
       textFromFile = getTextFromPDF(file);
 
-    return textSplitIntoSentences(textFromFile);
+    return textSplitIntoSentences(textFromFile, language);
   }
 
-  private String[] textSplitIntoSentences(String text) {
-    var iterator = BreakIterator.getSentenceInstance(textLocale);
-    iterator.setText(text);
-    var start = iterator.first();
-    var textIntoSentences = new ArrayList<>();
-
-    for (int end = iterator.next(); end != BreakIterator.DONE; start = end, end = iterator.next()) {
-      var sentenceToAdd = text.substring(start, end).trim();
-      if (!sentenceToAdd.isEmpty() && !sentenceToAdd.isBlank())
-        textIntoSentences.add(sentenceToAdd);
-    }
-
-    return textIntoSentences.toArray(new String[textIntoSentences.size()]);
+  private Locale getLocale(SupportedLanguagesEnum language) {
+    return new Locale(language.getLanguage(), language.getCountry());
   }
 
-  public String[] textSplitIntoWords(String text) {
-    var iterator = BreakIterator.getWordInstance(textLocale);
+  private String[] textSplitIntoSentences(String text, SupportedLanguagesEnum language) {
+    var iterator = BreakIterator.getSentenceInstance(getLocale(language));
+    return stringSplitByBreakIterator(text, iterator);
+  }
+
+  public String[] textSplitIntoWords(String text, SupportedLanguagesEnum language) {
+    var iterator = BreakIterator.getWordInstance(getLocale(language));
+    return stringSplitByBreakIterator(text, iterator);
+  }
+
+  private String[] stringSplitByBreakIterator(String text, BreakIterator iterator) {
     iterator.setText(text);
     var start = iterator.first();
     var textIntoWords = new ArrayList<>();
@@ -62,17 +62,17 @@ public class FileService {
   private String getTextFromPDF(MultipartFile multipartFile) throws IOException {
     var pdfDocument = new PDFTextStripper();
     var document = PDDocument.load(convertMultipartFileIntoFile(multipartFile));
-    var textInPdf = "";
-    var pdfContent = "";
+    var textInPdf = new StringBuilder();
+    var pdfContent = new StringBuilder();
 
     if (!document.isEncrypted()) {
-      textInPdf = pdfDocument.getText(document);
-      var lines = textInPdf.split("\\\\r\\\\n\\\\r\\\\n");
-      for (String line : lines) pdfContent += line;
+      textInPdf.append(pdfDocument.getText(document));
+      var lines = textInPdf.toString().split("\\\\r\\\\n\\\\r\\\\n");
+      for (String line : lines) pdfContent.append(line);
     }
 
     document.close();
-    return pdfContent.replaceAll("\n", " ");
+    return pdfContent.toString().replace("\n", " ");
   }
 
   private File convertMultipartFileIntoFile(MultipartFile multipartFile) throws IOException {

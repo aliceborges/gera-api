@@ -1,14 +1,11 @@
 package com.summarizer.enums;
 
 import java.util.Arrays;
-import java.util.EnumSet;
 
 public enum SupportedFilesEnum {
   PDF("application/pdf");
 
   private String description;
-
-  public static EnumSet supportedFilesList = EnumSet.of(PDF);
 
   SupportedFilesEnum(String description) {
     this.description = description;
