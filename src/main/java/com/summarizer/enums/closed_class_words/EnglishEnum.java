@@ -1,7 +1,5 @@
 package com.summarizer.enums.closed_class_words;
 
-import com.summarizer.enums.SupportedLanguagesEnum;
-
 import java.util.Arrays;
 
 public enum EnglishEnum {
