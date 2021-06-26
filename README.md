@@ -11,7 +11,7 @@ GERA (Gerador de Resumos de Textos Automático) é uma API que resume textos em 
     Apache PDFBox (2.0.24)
     Maven (4.0.0)
     Swagger (2.9.2) 
-    JUnit 
+    JUnit4
     Mockito
     Heroku
 
