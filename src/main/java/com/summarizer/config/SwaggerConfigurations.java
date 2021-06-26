@@ -30,7 +30,7 @@ public class SwaggerConfigurations {
     return new ApiInfoBuilder()
         .title("Gerador de resumos de textos automático")
         .description(
-            "Gerador de resumos de textos automático em português brasileiro feito para o projeto de final de curso da aluna Alice Borges dos Santos, do curso de Bacharelado em Sistemas"
+            "Gerador de resumos de textos automático em português brasileiro feito para o projeto de final de curso da aluna Alice Borges dos Santos, do curso de Bacharelado em Sistemas "
                 + "de Informação do Instituto Federal de Ciência e Tecnologia Catarinense")
         .version("1.0")
         .contact(

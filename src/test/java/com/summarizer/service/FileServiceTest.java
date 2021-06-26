@@ -39,10 +39,10 @@ public class FileServiceTest {
       throws FileTypeNotSupported, IOException, FileWithoutContent {
     var multipartFile =
         new MockMultipartFile(
-            "teste.pdf",
-            "teste.pdf",
+            "test.pdf",
+            "test.pdf",
             MediaType.APPLICATION_PDF_VALUE,
-            new FileInputStream("src/test/java/resources/teste.pdf"));
+            new FileInputStream("src/test/java/resources/test.pdf"));
     String[] expectedResult = new String[5];
     expectedResult[0] = "Arquivo teste.";
     expectedResult[1] = "Teste.";
