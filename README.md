@@ -58,5 +58,13 @@ $ mvn spring-boot:run
 
   [Heroku](https://summarizer-tcc.herokuapp.com/swagger-ui.html#/)<br>
   
+## Documentation
+API: A documentação da API é o próprio Swagger. <br>
+[Diagrama de Caso de Uso](https://github.com/aliceborges/summarizer/blob/main/documentation/Diagrama%20de%20Caso%20de%20Uso.jpg) <br>
+[Fluxograma da API](https://github.com/aliceborges/summarizer/blob/main/documentation/Fluxograma%20da%20API.jpg) <br>
+[Fluxograma da Análise das Frases](https://github.com/aliceborges/summarizer/blob/main/documentation/Fluxograma%20da%20An%C3%A1lise%20das%20Frases.jpg)<br>
+[Fluxograma da Análise das Palavras](https://github.com/aliceborges/summarizer/blob/main/documentation/Fluxograma%20da%20An%C3%A1lise%20das%20Palavras.jpg)<br>
+
+  
 ## Autora
   [Alice Borges dos Santos](https://www.linkedin.com/in/alice-borges/)
