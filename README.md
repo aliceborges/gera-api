@@ -1,5 +1,5 @@
 # GERA API
-GERA (Gerador de Resumos de Textos Automático) é uma API que resume textos em português brasileiro ou em português, com base na teoria de padrões léxicos de Michael Hoey e no estudo de Paulo César Fernandes de Oliviera. <br>
+GERA (Gerador de Resumos de Textos Automático) é uma API que resume textos em português brasileiro ou em inglês, com base na teoria de padrões léxicos de Michael Hoey e no estudo de Paulo César Fernandes de Oliviera. <br>
 *API desenvolvida para o projeto de conclusão de curso da aluna Alice Borges dos Santos, do curso de Bacharelado em Sistemas de Informação do Instituto Federal Catarinense de Ciência e Tecnologia.* <br>
 [LIVE DEMO ](https://summarizer-tcc.herokuapp.com/swagger-ui.html) <br> 
 
