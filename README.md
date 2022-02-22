@@ -28,12 +28,12 @@ $ mvn -v
 
 ### Clonando o repositório
 ```bash
-$ git clone git@github.com:aliceborges/summarizer.git
+$ git clone git@github.com:aliceborges/gera-api.git
 ```
 
 ### Compilando e empacotando a aplicação
 ```bash
-$ cd summarizer
+$ cd gera-api
 $ mvn compile
 $ mvn package
 ```
