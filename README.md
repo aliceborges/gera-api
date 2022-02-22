@@ -40,13 +40,13 @@ $ mvn package
 
 ### Testando a aplicação
 ```bash
-$ cd summarizer
+$ cd gera-api
 $ mvn test
 ```
 
 ### Executando a aplicação
 ```bash
-$ cd summarizer
+$ cd gera-api
 $ mvn spring-boot:run
 ```
 
@@ -60,10 +60,10 @@ $ mvn spring-boot:run
   
 ## Documentation
 API: A documentação da API é o próprio Swagger. <br>
-[Diagrama de Caso de Uso](https://github.com/aliceborges/summarizer/blob/main/documentation/Diagrama%20de%20Caso%20de%20Uso.jpg) <br>
-[Fluxograma da API](https://github.com/aliceborges/summarizer/blob/main/documentation/Fluxograma%20da%20API.jpg) <br>
-[Fluxograma da Análise das Frases](https://github.com/aliceborges/summarizer/blob/main/documentation/Fluxograma%20da%20An%C3%A1lise%20das%20Frases.jpg)<br>
-[Fluxograma da Análise das Palavras](https://github.com/aliceborges/summarizer/blob/main/documentation/Fluxograma%20da%20An%C3%A1lise%20das%20Palavras.jpg)<br>
+[Diagrama de Caso de Uso](https://github.com/aliceborges/gera-api/blob/main/documentation/Diagrama%20de%20Caso%20de%20Uso.jpg) <br>
+[Fluxograma da API](https://github.com/aliceborges/gera-api/blob/main/documentation/Fluxograma%20da%20API.jpg) <br>
+[Fluxograma da Análise das Frases](https://github.com/aliceborges/gera-api/blob/main/documentation/Fluxograma%20da%20An%C3%A1lise%20das%20Frases.jpg)<br>
+[Fluxograma da Análise das Palavras](https://github.com/aliceborges/gera-api/blob/main/documentation/Fluxograma%20da%20An%C3%A1lise%20das%20Palavras.jpg)<br>
 
   
 ## Autora
