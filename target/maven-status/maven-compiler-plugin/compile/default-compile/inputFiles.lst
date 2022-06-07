@@ -1,0 +1,13 @@
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/config/SwaggerConfigurations.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/enums/SupportedFilesEnum.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/exceptions/FileTypeNotSupported.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/service/SummarizerService.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/service/FileService.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/exceptions/FileNotEnoughContent.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/enums/closed_class_words/BrasilianPortugueseEnum.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/enums/SupportedLanguagesEnum.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/enums/closed_class_words/EnglishEnum.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/controller/SummarizerController.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/exceptions/FileWithoutContent.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/service/StringService.java
+/Users/alice.santos/Documents/code/gera-api/src/main/java/com/summarizer/SummarizerApplication.java

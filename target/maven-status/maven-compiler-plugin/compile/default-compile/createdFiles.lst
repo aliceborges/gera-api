@@ -1,0 +1,13 @@
+com/summarizer/service/FileService.class
+com/summarizer/exceptions/FileWithoutContent.class
+com/summarizer/controller/SummarizerController.class
+com/summarizer/enums/SupportedFilesEnum.class
+com/summarizer/SummarizerApplication.class
+com/summarizer/exceptions/FileTypeNotSupported.class
+com/summarizer/service/StringService.class
+com/summarizer/enums/SupportedLanguagesEnum.class
+com/summarizer/enums/closed_class_words/BrasilianPortugueseEnum.class
+com/summarizer/config/SwaggerConfigurations.class
+com/summarizer/service/SummarizerService.class
+com/summarizer/enums/closed_class_words/EnglishEnum.class
+com/summarizer/exceptions/FileNotEnoughContent.class

@@ -1,0 +1,5 @@
+com/summarizer/service/StringServiceTest.class
+com/summarizer/service/SummarizerServiceTest.class
+com/summarizer/controller/SummarizerControllerTest.class
+com/summarizer/service/FileServiceTest.class
+com/summarizer/utils/MockUtils.class
